@@ -1,0 +1,16 @@
+# Python virtual environment
+venv/
+env/
+pyvenv.cfg
+
+# Temporary folders
+tmp_frames_*/
+out_frames_*/
+output/
+uploads/
+
+
+# Other files
+*.pyc
+*.pyo
+__pycache__/
