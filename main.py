@@ -1,4 +1,4 @@
-from flask import Flask, request, make_response
+from flask import Flask, request, render_template, redirect, url_for, send_from_directory
 from werkzeug.utils import secure_filename
 import datetime
 import os
@@ -26,7 +26,7 @@ if not os.path.exists(OUTPUT_FOLDER):
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['OUTPUT_FOLDER'] = OUTPUT_FOLDER
 
-@app.route('/upload', methods=['POST'])
+@app.route('/', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
         if 'file' not in request.files:
@@ -68,9 +68,19 @@ def upload_file():
         shutil.rmtree(tmp_frames_folder)
         shutil.rmtree(out_frames_folder)
 
-        # Return a success response
-        response = make_response('Video processing completed successfully.', 200)
-        return response
+        # Redirect to the output file
+        output_file = f'{video_file_name}.out.mp4'
+        return redirect(url_for('download_file', filename=output_file))
+
+    return render_template('upload.html')
+
+@app.route('/download/<filename>')
+def download_file(filename):
+    return send_from_directory(app.config['OUTPUT_FOLDER'], filename, as_attachment=True)
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=8000, debug=True)

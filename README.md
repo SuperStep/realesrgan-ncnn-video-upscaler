@@ -35,12 +35,12 @@ sudo apt install ffmpeg
 ```bash
 python main.py
 ```
-2. Use curl to upload file:
-```bash
-curl -X POST http://localhost:5000/upload -H 'Content-Type: multipart/form-data' -F "file=@example.mp4"
-```
-3. Select an MP4 video file and click the "Upload" button.
-4. Wait for the video processing to complete. The upscaled video will be saved in the OUTPUT_FOLDER directory with the `.out.mp4` extension.
+
+2. Open your web browser and navigate to http://localhost:8000.
+![Alt Text](img/img1.png)
+3. On the upload page, click the "Choose File" button and select an MP4 video file.
+4. Click the "Upload" button to start the video processing.
+5. Wait for the video processing to complete. Once the processing is complete, you will be redirected to a download page where you can download the upscaled video.
 
 ## Configuration
 
